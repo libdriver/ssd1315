@@ -1,0 +1,1106 @@
+/**
+ * Copyright (c) 2015 - present LibDriver All rights reserved
+ * 
+ * The MIT License (MIT)
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE. 
+ *
+ * @file      main.c
+ * @brief     main source file
+ * @version   1.0.0
+ * @author    Shifeng Li
+ * @date      2024-11-30
+ *
+ * <h3>history</h3>
+ * <table>
+ * <tr><th>Date        <th>Version  <th>Author      <th>Description
+ * <tr><td>2024/11/30  <td>1.0      <td>Shifeng Li  <td>first upload
+ * </table>
+ */
+
+#include "driver_ssd1315_basic.h"
+#include "driver_ssd1315_advance.h"
+#include "driver_ssd1315_display_test.h"
+#include "clock.h"
+#include "delay.h"
+#include "uart.h"
+#include "shell.h"
+#include "getopt.h"
+#include <stdlib.h>
+
+/**
+ * @brief global var definition
+ */
+uint8_t g_buf[256];        /**< uart buffer */
+volatile uint16_t g_len;   /**< uart buffer length */
+
+/**
+ * @brief     ssd1315 full function
+ * @param[in] argc is arg numbers
+ * @param[in] **argv is the arg address
+ * @return    status code
+ *             - 0 success
+ *             - 1 run failed
+ *             - 5 param is invalid
+ * @note      none
+ */
+uint8_t ssd1315(uint8_t argc, char** argv)
+{
+    int c;
+    int longindex = 0;
+    const char short_options[] = "hipe:t:";
+    const struct option long_options[] =
+    {
+        {"help", no_argument, NULL, 'h'},
+        {"information", no_argument, NULL, 'i'},
+        {"port", no_argument, NULL, 'p'},
+        {"example", required_argument, NULL, 'e'},
+        {"test", required_argument, NULL, 't'},
+        {"addr", required_argument, NULL, 1},
+        {"color", required_argument, NULL, 2},
+        {"frame", required_argument, NULL, 3},
+        {"frames", required_argument, NULL, 4},
+        {"interface", required_argument, NULL, 5},
+        {"mode", required_argument, NULL, 6},
+        {"row", required_argument, NULL, 7},
+        {"start", required_argument, NULL, 8},
+        {"stop", required_argument, NULL, 9},
+        {"str", required_argument, NULL, 10},
+        {"x0", required_argument, NULL, 11},
+        {"x1", required_argument, NULL, 12},
+        {"x2", required_argument, NULL, 13},
+        {"y0", required_argument, NULL, 14},
+        {"y1", required_argument, NULL, 15},
+        {"y2", required_argument, NULL, 16},
+        {NULL, 0, NULL, 0},
+    };
+    char type[33] = "unknown";
+    ssd1315_address_t addr = SSD1315_ADDR_SA0_0;
+    ssd1315_scroll_frame_t frame = SSD1315_SCROLL_FRAME_2;
+    ssd1315_interface_t interface = SSD1315_INTERFACE_IIC;
+    ssd1315_fade_blinking_mode_t mode = SSD1315_FADE_BLINKING_MODE_DISABLE;
+    uint8_t color = 1;
+    uint8_t frames = 0;
+    uint8_t row = 0;
+    uint8_t start = 0;
+    uint8_t stop = 7;
+    uint8_t x0 = 0;
+    uint8_t x1 = 0;
+    uint8_t x2 = 0;
+    uint8_t y0 = 0;
+    uint8_t y1 = 0;
+    uint8_t y2 = 0;
+    uint8_t x0_flag = 0;
+    uint8_t x1_flag = 0;
+    uint8_t x2_flag = 0;
+    uint8_t y0_flag = 0;
+    uint8_t y1_flag = 0;
+    uint8_t y2_flag = 0;
+    uint8_t color_flag = 0;
+    char str[49] = "libdriver";
+    
+    /* if no params */
+    if (argc == 1)
+    {
+        /* goto the help */
+        goto help;
+    }
+    
+    /* init 0 */
+    optind = 0;
+    
+    /* parse */
+    do
+    {
+        /* parse the args */
+        c = getopt_long(argc, argv, short_options, long_options, &longindex);
+        
+        /* judge the result */
+        switch (c)
+        {
+            /* help */
+            case 'h' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 33);
+                snprintf(type, 32, "h");
+                
+                break;
+            }
+            
+            /* information */
+            case 'i' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 33);
+                snprintf(type, 32, "i");
+                
+                break;
+            }
+            
+            /* port */
+            case 'p' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 33);
+                snprintf(type, 32, "p");
+                
+                break;
+            }
+            
+            /* example */
+            case 'e' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 33);
+                snprintf(type, 32, "e_%s", optarg);
+                
+                break;
+            }
+            
+            /* test */
+            case 't' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 33);
+                snprintf(type, 32, "t_%s", optarg);
+                
+                break;
+            }
+            
+            /* addr */
+            case 1 :
+            {
+                /* set the addr pin */
+                if (strcmp("0", optarg) == 0)
+                {
+                    addr = SSD1315_ADDR_SA0_0;
+                }
+                else if (strcmp("1", optarg) == 0)
+                {
+                    addr = SSD1315_ADDR_SA0_1;
+                }
+                else
+                {
+                    return 5;
+                }
+                
+                break;
+            }
+            
+            /* color */
+            case 2 :
+            {
+                /* set the color */
+                if (strcmp("0", optarg) == 0)
+                {
+                    color = 0;
+                    color_flag = 1;
+                }
+                else if (strcmp("1", optarg) == 0)
+                {
+                    color = 1;
+                    color_flag = 1;
+                }
+                else
+                {
+                    return 5;
+                }
+                
+                break;
+            }
+            
+            /* frame */
+            case 3 :
+            {
+                /* set the frame */
+                if (strcmp("FRAME_2", optarg) == 0)
+                {
+                    frame = SSD1315_SCROLL_FRAME_2;
+                }
+                else if (strcmp("FRAME_3", optarg) == 0)
+                {
+                    frame = SSD1315_SCROLL_FRAME_3;
+                }
+                else if (strcmp("FRAME_4", optarg) == 0)
+                {
+                    frame = SSD1315_SCROLL_FRAME_4;
+                }
+                else if (strcmp("FRAME_5", optarg) == 0)
+                {
+                    frame = SSD1315_SCROLL_FRAME_5;
+                }
+                else if (strcmp("FRAME_6", optarg) == 0)
+                {
+                    frame = SSD1315_SCROLL_FRAME_6;
+                }
+                else if (strcmp("FRAME_32", optarg) == 0)
+                {
+                    frame = SSD1315_SCROLL_FRAME_32;
+                }
+                else if (strcmp("FRAME_64", optarg) == 0)
+                {
+                    frame = SSD1315_SCROLL_FRAME_64;
+                }
+                else if (strcmp("FRAME_128", optarg) == 0)
+                {
+                    frame = SSD1315_SCROLL_FRAME_128;
+                }
+                else
+                {
+                    return 5;
+                }
+                
+                break;
+            }
+             
+            /* frames */
+            case 4 :
+            {
+                /* set the frames */
+                frames = atol(optarg);
+                
+                break;
+            }
+            
+            /* interface */
+            case 5 :
+            {
+                /* set the interface */
+                if (strcmp("iic", optarg) == 0)
+                {
+                    interface = SSD1315_INTERFACE_IIC;
+                }
+                else if (strcmp("spi", optarg) == 0)
+                {
+                    interface = SSD1315_INTERFACE_SPI;
+                }
+                else
+                {
+                    return 5;
+                }
+                
+                break;
+            }
+            
+            /* mode */
+            case 6 :
+            {
+                /* set the mode */
+                if (strcmp("DISABLE", optarg) == 0)
+                {
+                    mode = SSD1315_FADE_BLINKING_MODE_DISABLE;
+                }
+                else if (strcmp("FADE-OUT", optarg) == 0)
+                {
+                    mode = SSD1315_FADE_BLINKING_MODE_FADE_OUT;
+                }
+                else if (strcmp("BLINKING", optarg) == 0)
+                {
+                    mode = SSD1315_FADE_BLINKING_MODE_BLINKING;
+                }
+                else
+                {
+                    return 5;
+                }
+                
+                break;
+            } 
+            
+            /* row */
+            case 7 :
+            {
+                /* set the row */
+                row = atol(optarg);
+                
+                break;
+            }
+            
+            /* start */
+            case 8 :
+            {
+                /* set the start */
+                start = atol(optarg);
+                
+                break;
+            }
+            
+            /* stop */
+            case 9 :
+            {
+                /* set the stop */
+                stop = atol(optarg);
+                
+                break;
+            }
+            
+            /* str */
+            case 10 :
+            {
+                /* set the str */
+                memset(str, 0, sizeof(char) * 49);
+                strncpy(str, optarg, 48);
+                
+                break;
+            }
+            
+            /* x0 */
+            case 11 :
+            {
+                /* convert */
+                x0 = atol(optarg);
+                x0_flag = 1;
+                
+                break;
+            }
+            
+            /* x1 */
+            case 12 :
+            {
+                /* convert */
+                x1 = atol(optarg);
+                x1_flag = 1;
+                
+                break;
+            }
+            
+            /* x2 */
+            case 13 :
+            {
+                /* convert */
+                x2 = atol(optarg);
+                x2_flag = 1;
+                
+                break;
+            }
+            /* y0 */
+            case 14 :
+            {
+                /* convert */
+                y0 = atol(optarg);
+                y0_flag = 1;
+                
+                break;
+            }
+            
+            /* y1 */
+            case 15 :
+            {
+                /* convert */
+                y1 = atol(optarg);
+                y1_flag = 1;
+                
+                break;
+            }
+            
+            /* y2 */
+            case 16 :
+            {
+                /* convert */
+                y2 = atol(optarg);
+                y2_flag = 1;
+                
+                break;
+            }
+            
+            /* the end */
+            case -1 :
+            {
+                break;
+            }
+            
+            /* others */
+            default :
+            {
+                return 5;
+            }
+        }
+    } while (c != -1);
+    
+    /* run the function */
+    if (strcmp("t_display", type) == 0)
+    {
+        /* run display test */
+        if (ssd1315_display_test(interface, addr) != 0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else if (strcmp("e_basic-str", type) == 0)
+    {
+        uint8_t res;
+        
+        /* clear */
+        res = ssd1315_basic_clear();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: clear screen failed.\n");
+            (void)ssd1315_basic_deinit();
+            
+            return 1;
+        }
+        
+        /* set the string */
+        res = ssd1315_basic_string(0, 0, str, (uint16_t)strlen(str), color, SSD1315_FONT_16);
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: show string failed.\n");
+            (void)ssd1315_basic_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: %s.\n", str);
+        
+        return 0;
+    }
+    else if (strcmp("e_basic-init", type) == 0)
+    {
+        uint8_t res;
+        
+        /* init */
+        res = ssd1315_basic_init(interface, addr);
+        if (res != 0)
+        {
+            (void)ssd1315_basic_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: init success.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_basic-display-off", type) == 0)
+    {
+        uint8_t res;
+        
+        /* display off */
+        res = ssd1315_basic_display_off();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: display off failed.\n");
+            (void)ssd1315_basic_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: display off.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_basic-display-on", type) == 0)
+    {
+        uint8_t res;
+        
+        /* display on */
+        res = ssd1315_basic_display_on();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: display on failed.\n");
+            (void)ssd1315_basic_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: display on.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_basic-clear", type) == 0)
+    {
+        uint8_t res;
+        
+        /* clear */
+        res = ssd1315_basic_clear();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: clear screen failed.\n");
+            (void)ssd1315_basic_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: clear screen.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_basic-deinit", type) == 0)
+    {
+        uint8_t res;
+        
+        /* deinit */
+        res = ssd1315_basic_deinit();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: deinit failed.\n");
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: deinit ssd1315.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_basic-point", type) == 0)
+    {
+        if ((x0_flag == 1) && (y0_flag == 1) && (color_flag == 0))
+        {
+            uint8_t res;
+            uint8_t data;
+            
+            /* read point */
+            res = ssd1315_basic_read_point(x0, y0, (uint8_t*)&data);
+            if (res != 0)
+            {
+                (void)ssd1315_basic_deinit();
+                
+                return 1;
+            }
+            
+            /* output */
+            ssd1315_interface_debug_print("ssd1315: read point %d %d is %d.\n", x0, y0, data);
+            
+            return 0;
+        }
+        else if ((x0_flag == 1) && (y0_flag == 1) && (color_flag == 1))
+        {
+            uint8_t res;
+            
+            /* write point */
+            res = ssd1315_basic_write_point(x0, y0, color);
+            if (res != 0)
+            {
+                (void)ssd1315_basic_deinit();
+                
+                return 1;
+            }
+            
+            /* output */
+            ssd1315_interface_debug_print("ssd1315: write point %d %d %d.\n", x0, y0, color);
+            
+            return 0;
+        }
+        else
+        {
+            return 5;
+        }
+    }
+    else if (strcmp("e_basic-rect", type) == 0)
+    {
+        uint8_t res;
+        
+        /* check the flag */
+        if ((x1_flag != 1) || (y1_flag != 1) || (x2_flag != 1) || (y2_flag != 1))
+        {
+             return 5;
+        }
+        
+        /* rect */
+        res = ssd1315_basic_rect(x1, y1, x2, y2, color);
+        if (res != 0)
+        {
+            (void)ssd1315_basic_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: draw rect %d %d %d %d.\n", x1, y1, x2, y2);
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-init", type) == 0)
+    {
+        uint8_t res;
+        
+        /* init */
+        res = ssd1315_advance_init(interface, addr);
+        if (res != 0)
+        {
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: init success.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-str", type) == 0)
+    {
+        uint8_t res;
+        
+        /* clear */
+        res = ssd1315_advance_clear();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: clear screen failed.\n");
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* set the string */
+        res = ssd1315_advance_string(0, 0, str, (uint16_t)strlen(str), color, SSD1315_FONT_16);
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: show string failed.\n");
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: %s.\n", str);
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-display-off", type) == 0)
+    {
+        uint8_t res;
+
+        /* display off */
+        res = ssd1315_advance_display_off();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: display off failed.\n");
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: display off.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-display-on", type) == 0)
+    {
+        uint8_t res;
+        
+        /* display on */
+        res = ssd1315_advance_display_on();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: display on failed.\n");
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: display on.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-clear", type) == 0)
+    {
+        uint8_t res;
+        
+        /* clear */
+        res = ssd1315_advance_clear();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: clear screen failed.\n");
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: clear screen.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-point", type) == 0)
+    {
+        if ((x0_flag == 1) && (y0_flag == 1) && (color_flag == 0))
+        {
+            uint8_t res;
+            uint8_t data;
+            
+            /* read point */
+            res = ssd1315_advance_read_point(x0, y0, (uint8_t*)&data);
+            if (res != 0)
+            {
+                (void)ssd1315_advance_deinit();
+                
+                return 1;
+            }
+            
+            /* output */
+            ssd1315_interface_debug_print("ssd1315: read point %d %d is %d.\n", x0, y0, data);
+            
+            return 0;
+        }
+        else if ((x0_flag == 1) && (y0_flag == 1) && (color_flag == 1))
+        {
+            uint8_t res;
+            
+            /* write point */
+            res = ssd1315_advance_write_point(x0, y0, color);
+            if (res != 0)
+            {
+                (void)ssd1315_advance_deinit();
+                
+                return 1;
+            }
+            
+            /* output */
+            ssd1315_interface_debug_print("ssd1315: write point %d %d %d.\n", x0, y0, color);
+            
+            return 0;
+        }
+        else
+        {
+            return 5;
+        }
+    }
+    else if (strcmp("e_advance-rect", type) == 0)
+    {
+        uint8_t res;
+
+        /* check the flag */
+        if ((x1_flag != 1) || (y1_flag != 1) || (x2_flag != 1) || (y2_flag != 1))
+        {
+             return 5;
+        }
+         
+        /* rect */
+        res = ssd1315_advance_rect(x1, y1, x2, y2, color);
+        if (res != 0)
+        {
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: draw rect %d %d %d %d.\n", x1, y1, x2, y2);
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-deinit", type) == 0)
+    {
+        uint8_t res;
+        
+        /* deinit */
+        res = ssd1315_advance_deinit();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: deinit failed.\n");
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: deinit ssd1315.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-enable-zoom", type) == 0)
+    {
+        uint8_t res;
+        
+        /* enable */
+        res = ssd1315_advance_enable_zoom_in();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: enable zoom in failed.\n");
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: enable zoom in.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-disable-zoom", type) == 0)
+    {
+        uint8_t res;
+        
+        /* disable */
+        res = ssd1315_advance_disable_zoom_in();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: disable zoom in failed.\n");
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: disable zoom in.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-fade-blinking", type) == 0)
+    {
+        uint8_t res;
+        char str_s[4][16] = { "disable", "", "fade out", "blinking" };
+        
+        /* fade blinking */
+        res = ssd1315_advance_fade_blinking(mode, frames);
+        if (res != 0)
+        {
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: set fade blinking %s mode with %d frames.\n", str_s[(uint8_t)mode], frames);
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-deactivate-scroll", type) == 0)
+    {
+        uint8_t res;
+        
+        /* deactivate */
+        res = ssd1315_advance_deactivate_scroll();
+        if (res != 0)
+        {
+            ssd1315_interface_debug_print("ssd1315: deactivate scroll failed.\n");
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: deactivate scroll.\n");
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-left-scroll", type) == 0)
+    {
+        uint8_t res;
+        
+        /* left scroll */
+        res = ssd1315_advance_vertical_left_horizontal_scroll(start, stop, row, frame);
+        if (res != 0)
+        {
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: vertical left horizontal scroll start stop rows frames %d %d %d.\n", start, stop, row);
+        
+        return 0;
+    }
+    else if (strcmp("e_advance-right-scroll", type) == 0)
+    {
+        uint8_t res;
+        
+        /* right scroll */
+        res = ssd1315_advance_vertical_right_horizontal_scroll(start, stop, row, frame);
+        if (res != 0)
+        {
+            (void)ssd1315_advance_deinit();
+            
+            return 1;
+        }
+        
+        /* output */
+        ssd1315_interface_debug_print("ssd1315: vertical right horizontal scroll start stop rows frames %d %d %d.\n", start, stop, row);
+        
+        return 0;
+    }
+    else if (strcmp("h", type) == 0)
+    {
+        help:
+        ssd1315_interface_debug_print("Usage:\n");
+        ssd1315_interface_debug_print("  ssd1315 (-i | --information)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-h | --help)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-p | --port)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-t display | --test=display) [--addr=<0 | 1>] [--interface=<iic | spi>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e basic-init | --example=basic-init) [--addr=<0 | 1>] [--interface=<iic | spi>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e basic-deinit | --example=basic-deinit)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e basic-str | --example=basic-str) [--str=<string>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e basic-display-on | --example=basic-display-on)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e basic-display-off | --example=basic-display-off)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e basic-clear | --example=basic-clear)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e basic-point | --example=basic-point) --x0=<x0> --y0=<y0> [--color=<0 | 1>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e basic-rect | --example=basic-rect) --x1=<x1> --y1=<y1> --x2=<x2> --y2=<y2> [--color=<0 | 1>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-init | --example=advance-init) [--addr=<0 | 1>] [--interface=<iic | spi>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-deinit | --example=advance-deinit)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-str | --example=advance-str) [--str=<string>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-display-on | --example=advance-display-on)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-display-off | --example=advance-display-off)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-clear | --example=advance-clear)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-point | --example=advance-point) --x0=<x0> --y0=<y0> [--color=<0 | 1>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-rect | --example=advance-rect) --x1=<x1> --y1=<y1> --x2=<x2> --y2=<y2> [--color=<0 | 1>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-enable-zoom | --example=advance-enable-zoom)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-disable-zoom | --example=advance-disable-zoom)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-deactivate-scroll | --example=advance-deactivate-scroll)\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-fade-blinking | --example=advance-fade-blinking) [--mode=<DISABLE | FADE-OUT | BLINKING>]\n");
+        ssd1315_interface_debug_print("          [--frames=<f>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-left-scroll | --example=advance-left-scroll) [--start=<spage>] [--stop=<epage>] [--row=<r>]\n");
+        ssd1315_interface_debug_print("          [--frame=<FRAME_2 | FRAME_3 | FRAME_4 | FRAME_5 | FRAME_6 | FRAME_32 | FRAME_64 | FRAME_128>]\n");
+        ssd1315_interface_debug_print("  ssd1315 (-e advance-right-scroll | --example=advance-right-scroll) [--start=<spage>] [--stop=<epage>] [--row=<r>]\n");
+        ssd1315_interface_debug_print("          [--frame=<FRAME_2 | FRAME_3 | FRAME_4 | FRAME_5 | FRAME_6 | FRAME_32 | FRAME_64 | FRAME_128>]\n");
+        ssd1315_interface_debug_print("\n");
+        ssd1315_interface_debug_print("Options:\n");
+        ssd1315_interface_debug_print("      --addr=<0 | 1>      Set the iic addr pin.([default: 0])\n");
+        ssd1315_interface_debug_print("      --color=<0 | 1>     Set the chip color.([default: 1])\n");
+        ssd1315_interface_debug_print("  -e <basic-init | basic-deinit | basic-str | basic-display-on | basic-display-off | basic-clear \n");
+        ssd1315_interface_debug_print("     | basic-point | basic-rect>, --example=<advance-init | advance-deinit | advance-str | advance-display-on\n");
+        ssd1315_interface_debug_print("     | advance-display-off | advance-clear | advance-point | advance-rect | advance-enable-zoom | advance-disable-zoom\n");
+        ssd1315_interface_debug_print("     | advance-fade-blinking | advance-left-scroll | advance-right-scroll | advance-deactivate-scroll>\n");
+        ssd1315_interface_debug_print("                          Run the driver example.\n");
+        ssd1315_interface_debug_print("      --frame=<FRAME_2 | FRAME_3 | FRAME_4 | FRAME_5 | FRAME_6 | FRAME_32 | FRAME_64 | FRAME_128>\n");
+        ssd1315_interface_debug_print("                          Set the scrolling frame.([default: FRAME_2])\n");
+        ssd1315_interface_debug_print("      --frames=<f>        Se the fade-blinking frames.([default: 0])\n");
+        ssd1315_interface_debug_print("  -h, --help              Show the help.\n");
+        ssd1315_interface_debug_print("  -i, --information       Show the chip information.\n");
+        ssd1315_interface_debug_print("      --interface=<iic | spi>\n");
+        ssd1315_interface_debug_print("                          Set the chip interface.([default: iic])\n");
+        ssd1315_interface_debug_print("      --mode=<DISABLE | FADE-OUT | BLINKING>\n");
+        ssd1315_interface_debug_print("                          Set the fade-blinking mode.([default: DISABLE])\n");
+        ssd1315_interface_debug_print("  -p, --port              Display the pin connections of the current board.\n");
+        ssd1315_interface_debug_print("      --row=<r>           Set the scrolling row.([default: 0])\n");
+        ssd1315_interface_debug_print("      --start=<spage>     Set the scrolling start page.([default: 0])\n");
+        ssd1315_interface_debug_print("      --stop=<epage>      Set the scrolling stop page.([default: 7])\n");
+        ssd1315_interface_debug_print("      --str=<string>      Set the display string.([default: libdriver])\n");
+        ssd1315_interface_debug_print("  -t <display>, --test=<display>\n");
+        ssd1315_interface_debug_print("                          Run the driver test.\n");
+        ssd1315_interface_debug_print("      --x0=<x0>           Set the x0 and it is the x of the point.\n");
+        ssd1315_interface_debug_print("      --x1=<x1>           Set the x1 and it is the top left x of the rect.\n");
+        ssd1315_interface_debug_print("      --x2=<x2>           Set the x2 and it is the bottom right x of the rect.\n");
+        ssd1315_interface_debug_print("      --y0=<y0>           Set the y0 and it is the y of the point.\n");
+        ssd1315_interface_debug_print("      --y1=<y1>           Set the y1 and it is the top left y of the rect.\n");
+        ssd1315_interface_debug_print("      --y2=<y2>           Set the y2 and it is the bottom right y of the rect.\n");
+        
+        return 0;
+    }
+    else if (strcmp("i", type) == 0)
+    {
+        ssd1315_info_t info;
+        
+        /* print ssd1315 info */
+        ssd1315_info(&info);
+        ssd1315_interface_debug_print("ssd1315: chip is %s.\n", info.chip_name);
+        ssd1315_interface_debug_print("ssd1315: manufacturer is %s.\n", info.manufacturer_name);
+        ssd1315_interface_debug_print("ssd1315: interface is %s.\n", info.interface);
+        ssd1315_interface_debug_print("ssd1315: driver version is %d.%d.\n", info.driver_version / 1000, (info.driver_version % 1000) / 100);
+        ssd1315_interface_debug_print("ssd1315: min supply voltage is %0.1fV.\n", info.supply_voltage_min_v);
+        ssd1315_interface_debug_print("ssd1315: max supply voltage is %0.1fV.\n", info.supply_voltage_max_v);
+        ssd1315_interface_debug_print("ssd1315: max current is %0.2fmA.\n", info.max_current_ma);
+        ssd1315_interface_debug_print("ssd1315: max temperature is %0.1fC.\n", info.temperature_max);
+        ssd1315_interface_debug_print("ssd1315: min temperature is %0.1fC.\n", info.temperature_min);
+        
+        return 0;
+    }
+    else if (strcmp("p", type) == 0)
+    {
+        /* print pin connection */
+        ssd1315_interface_debug_print("ssd1315: SPI interface SCK connected to GPIOA PIN5.\n");
+        ssd1315_interface_debug_print("ssd1315: SPI interface MISO connected to GPIOA PIN6.\n");
+        ssd1315_interface_debug_print("ssd1315: SPI interface MOSI connected to GPIOA PIN7.\n");
+        ssd1315_interface_debug_print("ssd1315: SPI interface CS connected to GPIOA PIN4.\n");
+        ssd1315_interface_debug_print("ssd1315: SPI interface cmd data gpio GPIO connected to GPIOA PIN8.\n");
+        ssd1315_interface_debug_print("ssd1315: SPI interface reset GPIO connected to GPIOA PIN0.\n");
+        ssd1315_interface_debug_print("ssd1315: IIC interface SCL connected to GPIOB PIN8.\n");
+        ssd1315_interface_debug_print("ssd1315: IIC interface SDA connected to GPIOB PIN9.\n");
+        ssd1315_interface_debug_print("ssd1315: IIC interface reset GPIO connected to GPIOA PIN0.\n");
+        
+        return 0;
+    }
+    else
+    {
+        return 5;
+    }
+}
+
+/**
+ * @brief main function
+ * @note  none
+ */
+int main(void)
+{
+    uint8_t res;
+    
+    /* stm32f407 clock init and hal init */
+    clock_init();
+    
+    /* delay init */
+    delay_init();
+    
+    /* uart init */
+    uart_init(115200);
+    
+    /* shell init && register ssd1315 function */
+    shell_init();
+    shell_register("ssd1315", ssd1315);
+    uart_print("ssd1315: welcome to libdriver ssd1315.\n");
+    
+    while (1)
+    {
+        /* read uart */
+        g_len = uart_read(g_buf, 256);
+        if (g_len != 0)
+        {
+            /* run shell */
+            res = shell_parse((char *)g_buf, g_len);
+            if (res == 0)
+            {
+                /* run success */
+            }
+            else if (res == 1)
+            {
+                uart_print("ssd1315: run failed.\n");
+            }
+            else if (res == 2)
+            {
+                uart_print("ssd1315: unknown command.\n");
+            }
+            else if (res == 3)
+            {
+                uart_print("ssd1315: length is too long.\n");
+            }
+            else if (res == 4)
+            {
+                uart_print("ssd1315: pretreat failed.\n");
+            }
+            else if (res == 5)
+            {
+                uart_print("ssd1315: param is invalid.\n");
+            }
+            else
+            {
+                uart_print("ssd1315: unknown status code.\n");
+            }
+            uart_flush();
+        }
+        delay_ms(100);
+    }
+}
