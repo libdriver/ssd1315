@@ -301,120 +301,120 @@ typedef struct ssd1315_info_s
 
 /**
  * @brief     initialize ssd1315_handle_t structure
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] STRUCTURE is ssd1315_handle_t
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] STRUCTURE ssd1315_handle_t
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_INIT(HANDLE, STRUCTURE)                     memset(HANDLE, 0, sizeof(STRUCTURE))
 
 /**
  * @brief     link iic_init function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to an iic_init function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to an iic_init function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_IIC_INIT(HANDLE, FUC)                      (HANDLE)->iic_init = FUC
 
 /**
  * @brief     link iic_deinit function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to an iic_deinit function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to an iic_deinit function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_IIC_DEINIT(HANDLE, FUC)                    (HANDLE)->iic_deinit = FUC
 
 /**
  * @brief     link iic_write function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to an iic_write function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to an iic_write function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_IIC_WRITE(HANDLE, FUC)                     (HANDLE)->iic_write = FUC
 
 /**
  * @brief     link spi_init function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a spi_init function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a spi_init function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_SPI_INIT(HANDLE, FUC)                      (HANDLE)->spi_init = FUC
 
 /**
  * @brief     link spi_deinit function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a spi_deinit function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a spi_deinit function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_SPI_DEINIT(HANDLE, FUC)                    (HANDLE)->spi_deinit = FUC
 
 /**
  * @brief     link spi_write_cmd function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a spi_write_cmd function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a spi_write_cmd function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_SPI_WRITE_COMMAND(HANDLE, FUC)             (HANDLE)->spi_write_cmd = FUC
 
 /**
  * @brief     link spi_cmd_data_gpio_init function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a spi_cmd_data_gpio_init function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a spi_cmd_data_gpio_init function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_SPI_COMMAND_DATA_GPIO_INIT(HANDLE, FUC)    (HANDLE)->spi_cmd_data_gpio_init = FUC
 
 /**
  * @brief     link spi_cmd_data_gpio_deinit function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a spi_cmd_data_gpio_deinit function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a spi_cmd_data_gpio_deinit function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_SPI_COMMAND_DATA_GPIO_DEINIT(HANDLE, FUC)  (HANDLE)->spi_cmd_data_gpio_deinit = FUC
 
 /**
  * @brief     link spi_cmd_data_gpio_write function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a spi_cmd_data_gpio_write function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a spi_cmd_data_gpio_write function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_SPI_COMMAND_DATA_GPIO_WRITE(HANDLE, FUC)   (HANDLE)->spi_cmd_data_gpio_write = FUC
 
 /**
  * @brief     link reset_gpio_init function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a reset_gpio_init function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a reset_gpio_init function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_RESET_GPIO_INIT(HANDLE, FUC)               (HANDLE)->reset_gpio_init = FUC
 
 /**
  * @brief     link reset_gpio_deinit function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a reset_gpio_deinit function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a reset_gpio_deinit function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_RESET_GPIO_DEINIT(HANDLE, FUC)             (HANDLE)->reset_gpio_deinit = FUC
 
 /**
  * @brief     link reset_gpio_write function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a reset_gpio_write function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a reset_gpio_write function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_RESET_GPIO_WRITE(HANDLE, FUC)              (HANDLE)->reset_gpio_write = FUC
 
 /**
  * @brief     link delay_ms function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a delay_ms function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a delay_ms function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_DELAY_MS(HANDLE, FUC)                      (HANDLE)->delay_ms = FUC
 
 /**
  * @brief     link debug_print function
- * @param[in] HANDLE points to an ssd1315 handle structure
- * @param[in] FUC points to a debug_print function address
+ * @param[in] HANDLE pointer to an ssd1315 handle structure
+ * @param[in] FUC pointer to a debug_print function address
  * @note      none
  */
 #define DRIVER_SSD1315_LINK_DEBUG_PRINT(HANDLE, FUC)                   (HANDLE)->debug_print = FUC
@@ -432,7 +432,7 @@ typedef struct ssd1315_info_s
 
 /**
  * @brief      get chip's information
- * @param[out] *info points to an ssd1315 info structure
+ * @param[out] *info pointer to an ssd1315 info structure
  * @return     status code
  *             - 0 success
  *             - 2 handle is NULL
@@ -442,8 +442,8 @@ uint8_t ssd1315_info(ssd1315_info_t *info);
 
 /**
  * @brief     set the chip interface
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] interface is the chip interface
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] interface chip interface
  * @return    status code
  *            - 0 success
  *            - 2 handle is NULL
@@ -453,8 +453,8 @@ uint8_t ssd1315_set_interface(ssd1315_handle_t *handle, ssd1315_interface_t inte
 
 /**
  * @brief      get the chip interface
- * @param[in]  *handle points to an ssd1315 handle structure
- * @param[out] *interface points to a chip interface buffer
+ * @param[in]  *handle pointer to an ssd1315 handle structure
+ * @param[out] *interface pointer to a chip interface buffer
  * @return     status code
  *             - 0 success
  *             - 2 handle is NULL
@@ -464,8 +464,8 @@ uint8_t ssd1315_get_interface(ssd1315_handle_t *handle, ssd1315_interface_t *int
 
 /**
  * @brief     set the chip iic address
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] addr_pin is the iic address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] addr_pin iic address
  * @return    status code
  *            - 0 success
  *            - 2 handle is NULL
@@ -475,8 +475,8 @@ uint8_t ssd1315_set_addr_pin(ssd1315_handle_t *handle, ssd1315_address_t addr_pi
 
 /**
  * @brief      get the chip iic address
- * @param[in]  *handle points to an ssd1315 handle structure
- * @param[out] *addr_pin points to an iic address buffer
+ * @param[in]  *handle pointer to an ssd1315 handle structure
+ * @param[out] *addr_pin pointer to an iic address buffer
  * @return     status code
  *             - 0 success
  *             - 2 handle is NULL
@@ -486,7 +486,7 @@ uint8_t ssd1315_get_addr_pin(ssd1315_handle_t *handle, ssd1315_address_t *addr_p
 
 /**
  * @brief     initialize the chip
- * @param[in] *handle points to an ssd1315 handle structure
+ * @param[in] *handle pointer to an ssd1315 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 iic or spi initialization failed
@@ -501,7 +501,7 @@ uint8_t ssd1315_init(ssd1315_handle_t *handle);
 
 /**
  * @brief     close the chip
- * @param[in] *handle points to an ssd1315 handle structure
+ * @param[in] *handle pointer to an ssd1315 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 iic or spi deinit failed
@@ -517,7 +517,7 @@ uint8_t ssd1315_deinit(ssd1315_handle_t *handle);
 
 /**
  * @brief     clear the screen
- * @param[in] *handle points to an ssd1315 handle structure
+ * @param[in] *handle pointer to an ssd1315 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 clear failed
@@ -529,7 +529,7 @@ uint8_t ssd1315_clear(ssd1315_handle_t *handle);
 
 /**
  * @brief     update the gram data
- * @param[in] *handle points to an ssd1315 handle structure
+ * @param[in] *handle pointer to an ssd1315 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 gram update failed
@@ -541,10 +541,10 @@ uint8_t ssd1315_gram_update(ssd1315_handle_t *handle);
 
 /**
  * @brief     write a point
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] x is the coordinate x
- * @param[in] y is the coordinate y
- * @param[in] data is the write data
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] x coordinate x
+ * @param[in] y coordinate y
+ * @param[in] data written data
  * @return    status code
  *            - 0 success
  *            - 1 write point failed
@@ -557,10 +557,10 @@ uint8_t ssd1315_write_point(ssd1315_handle_t *handle, uint8_t x, uint8_t y, uint
 
 /**
  * @brief      read a point
- * @param[in]  *handle points to an ssd1315 handle structure
- * @param[in]  x is the coordinate x
- * @param[in]  y is the coordinate y
- * @param[out] *data points to a data buffer
+ * @param[in]  *handle pointer to an ssd1315 handle structure
+ * @param[in]  x coordinate x
+ * @param[in]  y coordinate y
+ * @param[out] *data pointer to a data buffer
  * @return     status code
  *             - 0 success
  *             - 1 read point failed
@@ -573,10 +573,10 @@ uint8_t ssd1315_read_point(ssd1315_handle_t *handle, uint8_t x, uint8_t y, uint8
 
 /**
  * @brief     write a point in the gram
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] x is the coordinate x
- * @param[in] y is the coordinate y
- * @param[in] data is the write data
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] x coordinate x
+ * @param[in] y coordinate y
+ * @param[in] data written data
  * @return    status code
  *            - 0 success
  *            - 1 gram write point failed
@@ -589,10 +589,10 @@ uint8_t ssd1315_gram_write_point(ssd1315_handle_t *handle, uint8_t x, uint8_t y,
 
 /**
  * @brief      read a point from the gram
- * @param[in]  *handle points to an ssd1315 handle structure
- * @param[in]  x is the coordinate x
- * @param[in]  y is the coordinate y
- * @param[out] *data points to a data buffer
+ * @param[in]  *handle pointer to an ssd1315 handle structure
+ * @param[in]  x coordinate x
+ * @param[in]  y coordinate y
+ * @param[out] *data pointer to a data buffer
  * @return     status code
  *             - 0 success
  *             - 1 gram read point failed
@@ -605,13 +605,13 @@ uint8_t ssd1315_gram_read_point(ssd1315_handle_t *handle, uint8_t x, uint8_t y, 
 
 /**
  * @brief     draw a string in the gram
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] x is the coordinate x
- * @param[in] y is the coordinate y
- * @param[in] *str points to a write string address
- * @param[in] len is the length of the string
- * @param[in] color is the display color
- * @param[in] font is the display font size
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] x coordinate x
+ * @param[in] y coordinate y
+ * @param[in] *str pointer to a write string address
+ * @param[in] len length of the string
+ * @param[in] color display color
+ * @param[in] font display font size
  * @return    status code
  *            - 0 success
  *            - 1 gram write string failed
@@ -624,12 +624,12 @@ uint8_t ssd1315_gram_write_string(ssd1315_handle_t *handle, uint8_t x, uint8_t y
 
 /**
  * @brief     fill a rectangle in the gram
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] left is the left coordinate x
- * @param[in] top is the top coordinate y
- * @param[in] right is the right coordinate x
- * @param[in] bottom is the bottom coordinate y
- * @param[in] color is the display color
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] left left coordinate x
+ * @param[in] top top coordinate y
+ * @param[in] right right coordinate x
+ * @param[in] bottom bottom coordinate y
+ * @param[in] color display color
  * @return    status code
  *            - 0 success
  *            - 1 gram fill rect failed
@@ -644,12 +644,12 @@ uint8_t ssd1315_gram_fill_rect(ssd1315_handle_t *handle, uint8_t left, uint8_t t
 
 /**
  * @brief     draw a picture in the gram
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] left is the left coordinate x
- * @param[in] top is the top coordinate y
- * @param[in] right is the right coordinate x
- * @param[in] bottom is the bottom coordinate y
- * @param[in] *img points to an image buffer
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] left left coordinate x
+ * @param[in] top top coordinate y
+ * @param[in] right right coordinate x
+ * @param[in] bottom bottom coordinate y
+ * @param[in] *img pointer to an image buffer
  * @return    status code
  *            - 0 success
  *            - 1 gram draw picture failed
@@ -664,8 +664,8 @@ uint8_t ssd1315_gram_draw_picture(ssd1315_handle_t *handle, uint8_t left, uint8_
 
 /**
  * @brief     set the low column start address
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] addr is the low column start address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] addr low column start address
  * @return    status code
  *            - 0 success
  *            - 1 set low column start address failed
@@ -678,8 +678,8 @@ uint8_t ssd1315_set_low_column_start_address(ssd1315_handle_t *handle, uint8_t a
 
 /**
  * @brief     set the high column start address
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] addr is the high column start address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] addr high column start address
  * @return    status code
  *            - 0 success
  *            - 1 set high column start address failed
@@ -692,8 +692,8 @@ uint8_t ssd1315_set_high_column_start_address(ssd1315_handle_t *handle, uint8_t 
 
 /**
  * @brief     set the memory addressing mode
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] mode is the memory addressing mode
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] mode memory addressing mode
  * @return    status code
  *            - 0 success
  *            - 1 set memory addressing mode failed
@@ -705,9 +705,9 @@ uint8_t ssd1315_set_memory_addressing_mode(ssd1315_handle_t *handle, ssd1315_mem
 
 /**
  * @brief     set the column address range
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] start_addr is the column start address
- * @param[in] end_addr is the column end address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] start_addr column start address
+ * @param[in] end_addr column end address
  * @return    status code
  *            - 0 success
  *            - 1 set column address range failed
@@ -721,9 +721,9 @@ uint8_t ssd1315_set_column_address_range(ssd1315_handle_t *handle, uint8_t start
 
 /**
  * @brief     set the page address range
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] start_addr is the page start address
- * @param[in] end_addr is the page end address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] start_addr page start address
+ * @param[in] end_addr page end address
  * @return    status code
  *            - 0 success
  *            - 1 set page address range failed
@@ -737,9 +737,9 @@ uint8_t ssd1315_set_page_address_range(ssd1315_handle_t *handle, uint8_t start_a
 
 /**
  * @brief     set the fade blinking mode
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] mode is the fade blinking mode
- * @param[in] frames is the fade or blinking frames
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] mode fade blinking mode
+ * @param[in] frames fade or blinking frames
  * @return    status code
  *            - 0 success
  *            - 1 set fade blinking mode failed
@@ -752,10 +752,10 @@ uint8_t ssd1315_set_fade_blinking_mode(ssd1315_handle_t *handle, ssd1315_fade_bl
 
 /**
  * @brief     set the right horizontal scroll
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] start_page_addr is the start page address
- * @param[in] end_page_addr is the end page address
- * @param[in] frames is the scroll frames
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] start_page_addr start page address
+ * @param[in] end_page_addr end page address
+ * @param[in] frames scroll frames
  * @return    status code
  *            - 0 success
  *            - 1 set right horizontal scroll failed
@@ -770,10 +770,10 @@ uint8_t ssd1315_set_right_horizontal_scroll(ssd1315_handle_t *handle, uint8_t st
 
 /**
  * @brief     set the left horizontal scroll
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] start_page_addr is the start page address
- * @param[in] end_page_addr is the end page address
- * @param[in] frames is the scroll frames
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] start_page_addr start page address
+ * @param[in] end_page_addr end page address
+ * @param[in] frames scroll frames
  * @return    status code
  *            - 0 success
  *            - 1 set left horizontal scroll failed
@@ -788,14 +788,14 @@ uint8_t ssd1315_set_left_horizontal_scroll(ssd1315_handle_t *handle, uint8_t sta
 
 /**
  * @brief     set the vertical right horizontal scroll
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] enable is a bool value
- * @param[in] start_page_addr is the start page address
- * @param[in] end_page_addr is the end page address
- * @param[in] vertical_scrolling_offset is vertical scrolling offset
- * @param[in] frames is the scroll frames
- * @param[in] start_column_addr is the start column address
- * @param[in] end_column_addr is the end column address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] enable bool value
+ * @param[in] start_page_addr start page address
+ * @param[in] end_page_addr end page address
+ * @param[in] vertical_scrolling_offset vertical scrolling offset
+ * @param[in] frames scroll frames
+ * @param[in] start_column_addr start column address
+ * @param[in] end_column_addr end column address
  * @return    status code
  *            - 0 success
  *            - 1 set vertical right horizontal scroll failed
@@ -816,14 +816,14 @@ uint8_t ssd1315_set_vertical_right_horizontal_scroll(ssd1315_handle_t *handle, s
 
 /**
  * @brief     set the vertical left horizontal scroll
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] enable is a bool value
- * @param[in] start_page_addr is the start page address
- * @param[in] end_page_addr is the end page address
- * @param[in] vertical_scrolling_offset is vertical scrolling offset
- * @param[in] frames is the scroll frames
- * @param[in] start_column_addr is the start column address
- * @param[in] end_column_addr is the end column address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] enable bool value
+ * @param[in] start_page_addr start page address
+ * @param[in] end_page_addr end page address
+ * @param[in] vertical_scrolling_offset vertical scrolling offset
+ * @param[in] frames scroll frames
+ * @param[in] start_column_addr start column address
+ * @param[in] end_column_addr end column address
  * @return    status code
  *            - 0 success
  *            - 1 set vertical left horizontal scroll failed
@@ -844,7 +844,7 @@ uint8_t ssd1315_set_vertical_left_horizontal_scroll(ssd1315_handle_t *handle, ss
 
 /**
  * @brief     deactivate the scroll
- * @param[in] *handle points to an ssd1315 handle structure
+ * @param[in] *handle pointer to an ssd1315 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 deactivate scroll failed
@@ -856,7 +856,7 @@ uint8_t ssd1315_deactivate_scroll(ssd1315_handle_t *handle);
 
 /**
  * @brief     activate the scroll
- * @param[in] *handle points to an ssd1315 handle structure
+ * @param[in] *handle pointer to an ssd1315 handle structure
  * @return    status code
  *            - 0 success
  *            - 1 activate scroll failed
@@ -868,8 +868,8 @@ uint8_t ssd1315_activate_scroll(ssd1315_handle_t *handle);
 
 /**
  * @brief     set the display start line
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] l is the start line
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] l start line
  * @return    status code
  *            - 0 success
  *            - 1 set display start line failed
@@ -882,8 +882,8 @@ uint8_t ssd1315_set_display_start_line(ssd1315_handle_t *handle, uint8_t l);
 
 /**
  * @brief     set the display contrast
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] contrast is the display contrast
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] contrast display contrast
  * @return    status code
  *            - 0 success
  *            - 1 set contrast failed
@@ -895,9 +895,9 @@ uint8_t ssd1315_set_contrast(ssd1315_handle_t *handle, uint8_t contrast);
 
 /**
  * @brief     enable or disable the charge pump
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] enable is a bool value
- * @param[in] mode is the charge pump mode
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] enable bool value
+ * @param[in] mode charge pump mode
  * @return    status code
  *            - 0 success
  *            - 1 set charge pump failed
@@ -909,8 +909,8 @@ uint8_t ssd1315_set_charge_pump(ssd1315_handle_t *handle, ssd1315_charge_pump_t 
 
 /**
  * @brief     set the segment remap
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] remap is the segment remap param
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] remap segment remap param
  * @return    status code
  *            - 0 success
  *            - 1 set segment remap failed
@@ -922,9 +922,9 @@ uint8_t ssd1315_set_segment_remap(ssd1315_handle_t *handle, ssd1315_segment_colu
 
 /**
  * @brief     set the vertical scroll area
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] start_row is the start row
- * @param[in] end_row is the end row
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] start_row start row
+ * @param[in] end_row end row
  * @return    status code
  *            - 0 success
  *            - 1 set vertical scroll area failed
@@ -939,8 +939,8 @@ uint8_t ssd1315_set_vertical_scroll_area(ssd1315_handle_t *handle, uint8_t start
 
 /**
  * @brief     enable or disable the entire display
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] enable is a bool value
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] enable bool value
  * @return    status code
  *            - 0 success
  *            - 1 set entire display failed
@@ -952,8 +952,8 @@ uint8_t ssd1315_set_entire_display(ssd1315_handle_t *handle, ssd1315_entire_disp
 
 /**
  * @brief     set the display mode
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] mode is the display mode
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] mode display mode
  * @return    status code
  *            - 0 success
  *            - 1 set display mode failed
@@ -965,8 +965,8 @@ uint8_t ssd1315_set_display_mode(ssd1315_handle_t *handle, ssd1315_display_mode_
 
 /**
  * @brief     set the multiplex ratio
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] multiplex is the multiplex ratio
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] multiplex multiplex ratio
  * @return    status code
  *            - 0 success
  *            - 1 set multiplex ratio failed
@@ -980,8 +980,8 @@ uint8_t ssd1315_set_multiplex_ratio(ssd1315_handle_t *handle, uint8_t multiplex)
 
 /**
  * @brief     enable or disable the display
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] on_off is a bool value
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] on_off bool value
  * @return    status code
  *            - 0 success
  *            - 1 set display failed
@@ -993,8 +993,8 @@ uint8_t ssd1315_set_display(ssd1315_handle_t *handle, ssd1315_display_t on_off);
 
 /**
  * @brief     set the page address
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] addr is the page address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] addr page address
  * @return    status code
  *            - 0 success
  *            - 1 set page address failed
@@ -1007,8 +1007,8 @@ uint8_t ssd1315_set_page_address(ssd1315_handle_t *handle, uint8_t addr);
 
 /**
  * @brief     set the scan direction
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] dir is the scan direction
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] dir scan direction
  * @return    status code
  *            - 0 success
  *            - 1 set scan direction failed
@@ -1020,8 +1020,8 @@ uint8_t ssd1315_set_scan_direction(ssd1315_handle_t *handle, ssd1315_scan_direct
 
 /**
  * @brief     set the display offset
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] offset is the display offset
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] offset display offset
  * @return    status code
  *            - 0 success
  *            - 1 set display offset failed
@@ -1034,9 +1034,9 @@ uint8_t ssd1315_set_display_offset(ssd1315_handle_t *handle, uint8_t offset);
 
 /**
  * @brief     set the display clock
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] oscillator_frequency is the oscillator frequency
- * @param[in] clock_divide is the clock divide
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] oscillator_frequency oscillator frequency
+ * @param[in] clock_divide clock divide
  * @return    status code
  *            - 0 success
  *            - 1 set display clock failed
@@ -1050,8 +1050,8 @@ uint8_t ssd1315_set_display_clock(ssd1315_handle_t *handle, uint8_t oscillator_f
 
 /**
  * @brief     set the display zoom in
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] zoom is the display zoom in
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] zoom display zoom in
  * @return    status code
  *            - 0 success
  *            - 1 set zoom in failed
@@ -1063,9 +1063,9 @@ uint8_t ssd1315_set_zoom_in(ssd1315_handle_t *handle, ssd1315_zoom_in_t zoom);
 
 /**
  * @brief     set the pre charge period
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] phase1_period is the phase1 period
- * @param[in] phase2_period is the phase2 period
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] phase1_period phase1 period
+ * @param[in] phase2_period phase2 period
  * @return    status code
  *            - 0 success
  *            - 1 set pre charge period failed
@@ -1079,9 +1079,9 @@ uint8_t ssd1315_set_precharge_period(ssd1315_handle_t *handle, uint8_t phase1_pe
 
 /**
  * @brief     set the hardware com pins
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] conf is the pin conf
- * @param[in] remap is the left right remap
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] conf pin conf
+ * @param[in] remap left right remap
  * @return    status code
  *            - 0 success
  *            - 1 set com pins hardware conf failed
@@ -1093,8 +1093,8 @@ uint8_t ssd1315_set_com_pins_hardware_conf(ssd1315_handle_t *handle, ssd1315_pin
 
 /**
  * @brief     set the deselect level
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] level is the deselect level
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] level deselect level
  * @return    status code
  *            - 0 success
  *            - 1 set deselect level failed
@@ -1106,9 +1106,9 @@ uint8_t ssd1315_set_deselect_level(ssd1315_handle_t *handle, ssd1315_deselect_le
 
 /**
  * @brief     set iref
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] enable is a bool value
- * @param[in] iref is the set iref
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] enable bool value
+ * @param[in] iref set iref
  * @return    status code
  *            - 0 success
  *            - 1 set iref failed
@@ -1120,11 +1120,11 @@ uint8_t ssd1315_set_iref(ssd1315_handle_t *handle, ssd1315_iref_t enable, ssd131
 
 /**
  * @brief     set right horizontal scroll by one column
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] start_page is the start page
- * @param[in] end_page is the end page
- * @param[in] start_column_addr is the start column address
- * @param[in] end_column_addr is the end column address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] start_page start page
+ * @param[in] end_page end page
+ * @param[in] start_column_addr start column address
+ * @param[in] end_column_addr end column address
  * @return    status code
  *            - 0 success
  *            - 1 set right horizontal scroll by one column failed
@@ -1141,11 +1141,11 @@ uint8_t ssd1315_set_right_horizontal_scroll_one_column(ssd1315_handle_t *handle,
 
 /**
  * @brief     set left horizontal scroll by one column
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] start_page is the start page
- * @param[in] end_page is the end page
- * @param[in] start_column_addr is the start column address
- * @param[in] end_column_addr is the end column address
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] start_page start page
+ * @param[in] end_page end page
+ * @param[in] start_column_addr start column address
+ * @param[in] end_column_addr end column address
  * @return    status code
  *            - 0 success
  *            - 1 set left horizontal scroll by one column failed
@@ -1173,9 +1173,9 @@ uint8_t ssd1315_set_left_horizontal_scroll_one_column(ssd1315_handle_t *handle, 
 
 /**
  * @brief     write the register command
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] *buf points to a data buffer
- * @param[in] len is the data length
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] *buf pointer to a data buffer
+ * @param[in] len data length
  * @return    status code
  *            - 0 success
  *            - 1 write failed
@@ -1187,9 +1187,9 @@ uint8_t ssd1315_write_cmd(ssd1315_handle_t *handle, uint8_t *buf, uint8_t len);
 
 /**
  * @brief     write the register data
- * @param[in] *handle points to an ssd1315 handle structure
- * @param[in] *buf points to a data buffer
- * @param[in] len is the data length
+ * @param[in] *handle pointer to an ssd1315 handle structure
+ * @param[in] *buf pointer to a data buffer
+ * @param[in] len data length
  * @return    status code
  *            - 0 success
  *            - 1 write failed
