@@ -196,6 +196,7 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:gabe103fdb681ceac767f51e638b1d447d"><td class="mdescLeft">&#160;</td><td class="mdescRight">ssd1315 left right remap enumeration definition  <a href="#gabe103fdb681ceac767f51e638b1d447d">More...</a><br /></td></tr>
 <tr class="memitem:ga8c5691cf2944b94587d39581aee05532" id="r_ga8c5691cf2944b94587d39581aee05532"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga8c5691cf2944b94587d39581aee05532">ssd1315_deselect_level_t</a> { <a class="el" href="#gga8c5691cf2944b94587d39581aee05532a9dc295296bf9831b5e10dd66782a1348">SSD1315_DESELECT_LEVEL_0P65</a> = 0x00
+, <a class="el" href="#gga8c5691cf2944b94587d39581aee05532a88052223aac2f9fd4a1e335b09e84182">SSD1315_DESELECT_LEVEL_0P71</a> = 0x01
 , <a class="el" href="#gga8c5691cf2944b94587d39581aee05532a2ec44e37ad3c188c7ca3f35e849103a1">SSD1315_DESELECT_LEVEL_0P77</a> = 0x02
 , <a class="el" href="#gga8c5691cf2944b94587d39581aee05532a9355c7331a60c1a2c20e007ac4cffa54">SSD1315_DESELECT_LEVEL_0P83</a> = 0x03
  }</td></tr>
@@ -280,8 +281,8 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga636426ba5b34877da314850c3feee03d"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable or disable the charge pump  <br /></td></tr>
 <tr class="memitem:ga5133427cea944afe645b01ffadbfbaa4" id="r_ga5133427cea944afe645b01ffadbfbaa4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga5133427cea944afe645b01ffadbfbaa4">ssd1315_set_segment_remap</a> (<a class="el" href="#ga6ce4581ff09269fbc9885845f94a50ad">ssd1315_handle_t</a> *handle, <a class="el" href="#gad68d96adb9f33984359ed8b99eeda7af">ssd1315_segment_column_remap_t</a> remap)</td></tr>
 <tr class="memdesc:ga5133427cea944afe645b01ffadbfbaa4"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the segment remap  <br /></td></tr>
-<tr class="memitem:ga245686b72ce71930bd236d81d6509bb1" id="r_ga245686b72ce71930bd236d81d6509bb1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga245686b72ce71930bd236d81d6509bb1">ssd1315_set_vertical_scroll_area</a> (<a class="el" href="#ga6ce4581ff09269fbc9885845f94a50ad">ssd1315_handle_t</a> *handle, uint8_t start_row, uint8_t end_row)</td></tr>
-<tr class="memdesc:ga245686b72ce71930bd236d81d6509bb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the vertical scroll area  <br /></td></tr>
+<tr class="memitem:gab67bd4a26207719c9de6f8f399fac1e6" id="r_gab67bd4a26207719c9de6f8f399fac1e6"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#gab67bd4a26207719c9de6f8f399fac1e6">ssd1315_set_vertical_scroll_area</a> (<a class="el" href="#ga6ce4581ff09269fbc9885845f94a50ad">ssd1315_handle_t</a> *handle, uint8_t start_row, uint8_t scroll_row)</td></tr>
+<tr class="memdesc:gab67bd4a26207719c9de6f8f399fac1e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">set the vertical scroll area  <br /></td></tr>
 <tr class="memitem:ga0769254f14f6eb0df080c24bd36552ba" id="r_ga0769254f14f6eb0df080c24bd36552ba"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga0769254f14f6eb0df080c24bd36552ba">ssd1315_set_entire_display</a> (<a class="el" href="#ga6ce4581ff09269fbc9885845f94a50ad">ssd1315_handle_t</a> *handle, <a class="el" href="#gaee807af83a398dcd575aa4860da1fc1a">ssd1315_entire_display_t</a> enable)</td></tr>
 <tr class="memdesc:ga0769254f14f6eb0df080c24bd36552ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">enable or disable the entire display  <br /></td></tr>
 <tr class="memitem:ga3ad1f873ccfa2ba48e32329246a6eaa9" id="r_ga3ad1f873ccfa2ba48e32329246a6eaa9"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ga3ad1f873ccfa2ba48e32329246a6eaa9">ssd1315_set_display_mode</a> (<a class="el" href="#ga6ce4581ff09269fbc9885845f94a50ad">ssd1315_handle_t</a> *handle, <a class="el" href="#ga442be25c34da7fb3a4fd0b5a1f9d714e">ssd1315_display_mode_t</a> mode)</td></tr>
@@ -439,6 +440,8 @@ Functions</h2></td></tr>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="gga8c5691cf2944b94587d39581aee05532a9dc295296bf9831b5e10dd66782a1348" name="gga8c5691cf2944b94587d39581aee05532a9dc295296bf9831b5e10dd66782a1348"></a>SSD1315_DESELECT_LEVEL_0P65&#160;</td><td class="fielddoc"><p>deselect level 0.65 </p>
 </td></tr>
+<tr><td class="fieldname"><a id="gga8c5691cf2944b94587d39581aee05532a88052223aac2f9fd4a1e335b09e84182" name="gga8c5691cf2944b94587d39581aee05532a88052223aac2f9fd4a1e335b09e84182"></a>SSD1315_DESELECT_LEVEL_0P71&#160;</td><td class="fielddoc"><p>deselect level 0.71 </p>
+</td></tr>
 <tr><td class="fieldname"><a id="gga8c5691cf2944b94587d39581aee05532a2ec44e37ad3c188c7ca3f35e849103a1" name="gga8c5691cf2944b94587d39581aee05532a2ec44e37ad3c188c7ca3f35e849103a1"></a>SSD1315_DESELECT_LEVEL_0P77&#160;</td><td class="fielddoc"><p>deselect level 0.77 </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga8c5691cf2944b94587d39581aee05532a9355c7331a60c1a2c20e007ac4cffa54" name="gga8c5691cf2944b94587d39581aee05532a9355c7331a60c1a2c20e007ac4cffa54"></a>SSD1315_DESELECT_LEVEL_0P83&#160;</td><td class="fielddoc"><p>deselect level 0.83 </p>
@@ -569,7 +572,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="driver__ssd1315_8h_source.html#l00243">243</a> of file <a class="el" href="driver__ssd1315_8h_source.html">driver_ssd1315.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="driver__ssd1315_8h_source.html#l00244">244</a> of file <a class="el" href="driver__ssd1315_8h_source.html">driver_ssd1315.h</a>.</p>
 
 </div>
 </div>
@@ -641,7 +644,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="driver__ssd1315_8h_source.html#l00225">225</a> of file <a class="el" href="driver__ssd1315_8h_source.html">driver_ssd1315.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="driver__ssd1315_8h_source.html#l00226">226</a> of file <a class="el" href="driver__ssd1315_8h_source.html">driver_ssd1315.h</a>.</p>
 
 </div>
 </div>
@@ -665,7 +668,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="driver__ssd1315_8h_source.html#l00234">234</a> of file <a class="el" href="driver__ssd1315_8h_source.html">driver_ssd1315.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="driver__ssd1315_8h_source.html#l00235">235</a> of file <a class="el" href="driver__ssd1315_8h_source.html">driver_ssd1315.h</a>.</p>
 
 </div>
 </div>
@@ -2326,13 +2329,13 @@ Functions</h2></td></tr>
 <li>1 set left horizontal scroll by one column failed</li>
 <li>2 handle is NULL</li>
 <li>3 handle is not initialized</li>
-<li>4 start_page &gt; 5</li>
-<li>5 end_page &gt; 5</li>
+<li>4 start_page &gt; 7</li>
+<li>5 end_page &gt; 7</li>
 <li>6 start_column_addr &gt; 0x7F</li>
 <li>7 end_column_addr &gt; 0x7F </li>
 </ul>
 </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>start_page &lt;= 5, end_page &lt;= 5, start_column_addr &lt;= 0x7F, end_column_addr &lt;= 0x7F </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>start_page &lt;= 7, end_page &lt;= 7, start_column_addr &lt;= 0x7F, end_column_addr &lt;= 0x7F </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="driver__ssd1315_8c_source.html#l02442">2442</a> of file <a class="el" href="driver__ssd1315_8c_source.html">driver_ssd1315.c</a>.</p>
 
@@ -2702,13 +2705,13 @@ Functions</h2></td></tr>
 <li>1 set right horizontal scroll by one column failed</li>
 <li>2 handle is NULL</li>
 <li>3 handle is not initialized</li>
-<li>4 start_page &gt; 5</li>
-<li>5 end_page &gt; 5</li>
+<li>4 start_page &gt; 7</li>
+<li>5 end_page &gt; 7</li>
 <li>6 start_column_addr &gt; 0x7F</li>
 <li>7 end_column_addr &gt; 0x7F </li>
 </ul>
 </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>start_page &lt;= 5, end_page &lt;= 5, start_column_addr &lt;= 0x7F, end_column_addr &lt;= 0x7F </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>start_page &lt;= 7, end_page &lt;= 7, start_column_addr &lt;= 0x7F, end_column_addr &lt;= 0x7F </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="driver__ssd1315_8c_source.html#l02375">2375</a> of file <a class="el" href="driver__ssd1315_8c_source.html">driver_ssd1315.c</a>.</p>
 
@@ -2956,8 +2959,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga245686b72ce71930bd236d81d6509bb1" name="ga245686b72ce71930bd236d81d6509bb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga245686b72ce71930bd236d81d6509bb1">&#9670;&#160;</a></span>ssd1315_set_vertical_scroll_area()</h2>
+<a id="gab67bd4a26207719c9de6f8f399fac1e6" name="gab67bd4a26207719c9de6f8f399fac1e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gab67bd4a26207719c9de6f8f399fac1e6">&#9670;&#160;</a></span>ssd1315_set_vertical_scroll_area()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2975,7 +2978,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>end_row</em></span>&#160;)</td>
+          <td class="paramtype">uint8_t</td>          <td class="paramname"><span class="paramname"><em>scroll_row</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2985,7 +2988,7 @@ Functions</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an ssd1315 handle structure </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">start_row</td><td>start row </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">end_row</td><td>end row </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">scroll_row</td><td>scroll row </td></tr>
   </table>
   </dd>
 </dl>
@@ -2995,11 +2998,11 @@ Functions</h2></td></tr>
 <li>2 handle is NULL</li>
 <li>3 handle is not initialized</li>
 <li>4 start_row is invalid</li>
-<li>5 end_row is invalid</li>
-<li>6 end_row &gt; start_row </li>
+<li>5 scroll_row is invalid</li>
+<li>6 start_row + scroll_row &gt; 64 </li>
 </ul>
 </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>start_row &lt;= 0x3F, end_row &lt;= 0x7F, start_row &gt;= end_row </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>start_row &lt;= 0x3F, scroll_row &lt;= 0x7F, start_row + scroll_row &lt;= 64 </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="driver__ssd1315_8c_source.html#l01866">1866</a> of file <a class="el" href="driver__ssd1315_8c_source.html">driver_ssd1315.c</a>.</p>
 

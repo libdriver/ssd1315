@@ -1,5 +1,6 @@
 var NAVTREEINDEX1 =
 {
+"group__ssd1315__example__driver.html#ga754a186d05f3408dafe836c9ab16da7c":[0,0,4,67],
 "group__ssd1315__example__driver.html#ga798969b96a004ba7e2d85c3a3177f5fe":[0,0,4,68],
 "group__ssd1315__example__driver.html#ga7a55d6b8af12eb825bcc8d02de7c859a":[0,0,4,34],
 "group__ssd1315__example__driver.html#ga7b1fbfc8d2116d923aef6568ae5949df":[0,0,4,5],

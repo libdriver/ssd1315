@@ -215,6 +215,7 @@ typedef enum
 typedef enum  
 {
     SSD1315_DESELECT_LEVEL_0P65 = 0x00,        /**< deselect level 0.65 */
+    SSD1315_DESELECT_LEVEL_0P71 = 0x01,        /**< deselect level 0.71 */
     SSD1315_DESELECT_LEVEL_0P77 = 0x02,        /**< deselect level 0.77 */
     SSD1315_DESELECT_LEVEL_0P83 = 0x03,        /**< deselect level 0.83 */
 } ssd1315_deselect_level_t;
@@ -924,18 +925,18 @@ uint8_t ssd1315_set_segment_remap(ssd1315_handle_t *handle, ssd1315_segment_colu
  * @brief     set the vertical scroll area
  * @param[in] *handle pointer to an ssd1315 handle structure
  * @param[in] start_row start row
- * @param[in] end_row end row
+ * @param[in] scroll_row scroll row
  * @return    status code
  *            - 0 success
  *            - 1 set vertical scroll area failed
  *            - 2 handle is NULL
  *            - 3 handle is not initialized
  *            - 4 start_row is invalid
- *            - 5 end_row is invalid
- *            - 6 end_row > start_row
- * @note      start_row <= 0x3F, end_row <= 0x7F, start_row >= end_row
+ *            - 5 scroll_row is invalid
+ *            - 6 start_row + scroll_row > 64
+* @note       start_row <= 0x3F, scroll_row <= 0x7F, start_row + scroll_row <= 64
  */
-uint8_t ssd1315_set_vertical_scroll_area(ssd1315_handle_t *handle, uint8_t start_row, uint8_t end_row);
+uint8_t ssd1315_set_vertical_scroll_area(ssd1315_handle_t *handle, uint8_t start_row, uint8_t scroll_row);
 
 /**
  * @brief     enable or disable the entire display
@@ -1130,11 +1131,11 @@ uint8_t ssd1315_set_iref(ssd1315_handle_t *handle, ssd1315_iref_t enable, ssd131
  *            - 1 set right horizontal scroll by one column failed
  *            - 2 handle is NULL
  *            - 3 handle is not initialized
- *            - 4 start_page > 5
- *            - 5 end_page > 5
+ *            - 4 start_page > 7
+ *            - 5 end_page > 7
  *            - 6 start_column_addr > 0x7F
  *            - 7 end_column_addr > 0x7F
- * @note      start_page <= 5, end_page <= 5, start_column_addr <= 0x7F, end_column_addr <= 0x7F
+ * @note      start_page <= 7, end_page <= 7, start_column_addr <= 0x7F, end_column_addr <= 0x7F
  */
 uint8_t ssd1315_set_right_horizontal_scroll_one_column(ssd1315_handle_t *handle, uint8_t start_page, uint8_t end_page,
                                                        uint8_t start_column_addr, uint8_t end_column_addr);
@@ -1151,11 +1152,11 @@ uint8_t ssd1315_set_right_horizontal_scroll_one_column(ssd1315_handle_t *handle,
  *            - 1 set left horizontal scroll by one column failed
  *            - 2 handle is NULL
  *            - 3 handle is not initialized
- *            - 4 start_page > 5
- *            - 5 end_page > 5
+ *            - 4 start_page > 7
+ *            - 5 end_page > 7
  *            - 6 start_column_addr > 0x7F
  *            - 7 end_column_addr > 0x7F
- * @note      start_page <= 5, end_page <= 5, start_column_addr <= 0x7F, end_column_addr <= 0x7F
+ * @note      start_page <= 7, end_page <= 7, start_column_addr <= 0x7F, end_column_addr <= 0x7F
  */
 uint8_t ssd1315_set_left_horizontal_scroll_one_column(ssd1315_handle_t *handle, uint8_t start_page, uint8_t end_page,
                                                       uint8_t start_column_addr, uint8_t end_column_addr);

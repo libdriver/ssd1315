@@ -32,6 +32,7 @@ var driver__ssd1315_8h =
     ] ],
     [ "ssd1315_deselect_level_t", "group__ssd1315__base__driver.html#ga8c5691cf2944b94587d39581aee05532", [
       [ "SSD1315_DESELECT_LEVEL_0P65", "group__ssd1315__base__driver.html#gga8c5691cf2944b94587d39581aee05532a9dc295296bf9831b5e10dd66782a1348", null ],
+      [ "SSD1315_DESELECT_LEVEL_0P71", "group__ssd1315__base__driver.html#gga8c5691cf2944b94587d39581aee05532a88052223aac2f9fd4a1e335b09e84182", null ],
       [ "SSD1315_DESELECT_LEVEL_0P77", "group__ssd1315__base__driver.html#gga8c5691cf2944b94587d39581aee05532a2ec44e37ad3c188c7ca3f35e849103a1", null ],
       [ "SSD1315_DESELECT_LEVEL_0P83", "group__ssd1315__base__driver.html#gga8c5691cf2944b94587d39581aee05532a9355c7331a60c1a2c20e007ac4cffa54", null ]
     ] ],
@@ -153,7 +154,7 @@ var driver__ssd1315_8h =
     [ "ssd1315_set_segment_remap", "group__ssd1315__base__driver.html#ga5133427cea944afe645b01ffadbfbaa4", null ],
     [ "ssd1315_set_vertical_left_horizontal_scroll", "group__ssd1315__base__driver.html#gada2f62961e25c2e50c875864dd691a1d", null ],
     [ "ssd1315_set_vertical_right_horizontal_scroll", "group__ssd1315__base__driver.html#ga69cda76ee3746806530518b5bed5fef2", null ],
-    [ "ssd1315_set_vertical_scroll_area", "group__ssd1315__base__driver.html#ga245686b72ce71930bd236d81d6509bb1", null ],
+    [ "ssd1315_set_vertical_scroll_area", "group__ssd1315__base__driver.html#gab67bd4a26207719c9de6f8f399fac1e6", null ],
     [ "ssd1315_set_zoom_in", "group__ssd1315__base__driver.html#ga2eb68cd55dac6df0da6f7248793dcb2c", null ],
     [ "ssd1315_write_cmd", "group__ssd1315__extend__driver.html#gaafc0e97d447753b80c2b13d0811f0cb1", null ],
     [ "ssd1315_write_data", "group__ssd1315__extend__driver.html#ga2ba29bb91b55722e1ac2ac2c2354e82b", null ],
